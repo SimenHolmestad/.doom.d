@@ -1,0 +1,164 @@
+#+PROPERTY: header-args :results silent
+* Startup
+** Start in full screen
+#+begin_src emacs-lisp
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(toggle-frame-fullscreen)
+#+end_src
+* Change mac keyboard settings
+Change cmd-key to meta and let alt function as normal for special keys.
+#+begin_src emacs-lisp
+(setq mac-option-modifier 'none)
+(setq mac-command-modifier (quote meta))
+#+end_src
+* Toggling of themes
+Taken directly from previous config. Makes it possible to toggle themes with "SPC t t".
+#+begin_src emacs-lisp
+(defvar sh-theme-dark 'doom-city-lights)
+(defvar sh-theme-light 'doom-solarized-light)
+(defvar sh-current-theme sh-theme-dark)
+
+;; Disable other themes before loading new one
+(defadvice load-theme (before theme-dont-propagate activate)
+  "Disable theme before loading new one."
+  (mapc #'disable-theme custom-enabled-themes))
+
+(defun sh-set-next-theme (theme)
+  (load-theme theme t)
+  (setq sh-current-theme theme))
+
+(defun sh-toggle-theme ()
+  (interactive)
+  (cond ((eq sh-current-theme sh-theme-dark) (sh-set-next-theme sh-theme-light))
+        ((eq sh-current-theme sh-theme-light) (sh-set-next-theme sh-theme-dark)))
+  (run-hooks 'sh-post-theme-change-hook)) ;; Some stuff needs to reset after theme change
+
+(load-theme sh-theme-dark t)
+(define-key evil-normal-state-map (kbd "SPC t t") 'sh-toggle-theme)
+#+end_src
+* Toggle frame fullscreen
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-M-Ø") 'toggle-frame-fullscreen)
+#+end_src
+* Extra navigation and editing commands
+#+begin_src emacs-lisp
+(map! :map evil-normal-state-map "g r" 'lsp-find-references)
+(map! :map evil-normal-state-map "g b" 'better-jumper-jump-backward)
+(map! :map evil-normal-state-map "s" 'isearch-forward)
+(map! :map evil-normal-state-map "S" 'isearch-backward)
+(map! :map evil-normal-state-map "SPC c SPC" 'recompile)
+(map! :map evil-normal-state-map "ø" 'evil-avy-goto-word-or-subword-1)
+(map! :map evil-normal-state-map "g ø" 'pop-global-mark)
+(map! :map evil-org-agenda-mode-map "ø" 'evil-avy-goto-word-or-subword-1)
+
+(map! :map evil-normal-state-map "j" 'evil-next-visual-line)
+(map! :map evil-normal-state-map "k" 'evil-previous-visual-line)
+#+end_src
+* Dired-settings
+#+begin_src emacs-lisp
+(map! :map dired-mode-map
+      :n "<tab>" #'dired-display-file
+      :n "h" #'dired-up-directory
+      :n "l" #'dired-find-file)
+#+end_src
+** Less information in dired
+Er litt usikker på denne. Blir potensielt veldig stygt.
+#+begin_src emacs-lisp
+;; (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
+#+end_src
+* Yasnippet
+#+begin_src emacs-lisp
+(map! :map yas-minor-mode-map "C-ø" #'yas-expand)
+#+end_src
+* Org-mode
+** Org latex preview
+This thing is gold.
+#+begin_src emacs-lisp
+(map! :map org-mode-map :n "SPC m m" 'org-latex-preview)
+#+end_src
+** Org agenda keys
+#+begin_src emacs-lisp
+(map! :map evil-org-agenda-mode-map "C-h" 'org-agenda-earlier)
+(map! :map evil-org-agenda-mode-map "C-l" 'org-agenda-later)
+#+end_src
+* Local settings
+#+begin_src emacs-lisp
+(load "~/.doom.d/local_stuff.el" t)
+#+end_src
+* Text scale
+** Better size of org-headings
+#+begin_src emacs-lisp
+(custom-set-faces!
+ '(outline-1 :height 1.4)
+ '(outline-2 :height 1.25)
+ '(outline-3 :height 1.15))
+#+end_src
+** Default text scale
+#+begin_src emacs-lisp
+(map! :map evil-normal-state-map "C-+" 'default-text-scale-increase)
+(map! :map evil-normal-state-map "C--" 'default-text-scale-decrease)
+(map! :map evil-normal-state-map "C-x C-0" 'default-text-scale-reset)
+#+end_src
+* Defaults for ivy
+In my opinion, these are better defaults. (if you are not scared of the control key)
+#+begin_src emacs-lisp
+(map! :map ivy-minibuffer-map "C-h" #'ivy-backward-delete-char)
+(map! :map ivy-minibuffer-map "C-l" #'ivy-alt-done)
+(map! :map ivy-minibuffer-map "RET" #'ivy-alt-done)
+#+end_src
+* Python
+Denne fungerer visst ikke helt.
+#+begin_src emacs-lisp
+(after! python
+  (setq lsp-pyls-plugins-pycodestyle-max-line-length 400))
+#+end_src
+** Flycheck
+#+begin_src emacs-lisp
+(setq-hook! 'python-mode-hook flycheck-checker 'python-flake8)
+(use-package flycheck
+  :config
+  (setq-default flycheck-disabled-checkers '(python-pylint)))
+#+end_src
+* Not save to killring when deleting single word
+This code is stolen from this post: https://www.reddit.com/r/emacs/comments/2ny06e/delete_text_not_kill_it_into_killring/.
+#+begin_src emacs-lisp
+(defun my-delete-word (arg)
+  "Delete characters forward until encountering the end of a word.
+With argument, do this that many times.
+This command does not push erased text to kill-ring."
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+
+(defun my-backward-delete-word (arg)
+  "Delete characters backward until encountering the beginning of a word.
+With argument, do this that many times.
+This command does not push erased text to kill-ring."
+  (interactive "p")
+  (my-delete-word (- arg)))
+
+(global-set-key (kbd "<C-backspace>") 'my-backward-delete-word)
+#+end_src
+* Eshell
+#+begin_src emacs-lisp
+(map! :map evil-normal-state-map "SPC e" #'eshell)
+#+end_src
+* LSP-UI
+lsp-ui-sideline is not so good when working with two files side by side.
+#+begin_src emacs-lisp
+(setq lsp-ui-sideline-enable nil)
+#+end_src
+* Window configuration
+#+begin_src emacs-lisp
+(map! :map doom-leader-map "w o" #'delete-other-windows)
+#+end_src
+* Ting som er fint å vite
+- ESC kan brukes for å lukke compile-bufferen
+- Hvis det er problemer med python-error-meldinger så er det ".config/flake8" som må endres på.
+- Persp-mode er dritnice
+- Det går an å bruke "SPC o o" for å åpne i finder
+- Man kan bruke "SPC w u" for å "undoe" window-configs: Dette er dritschmud.
+- Hvis man trykker "p" i visual mode endrer man den teksten man har markert med den siste teksten som er kopiert. (i doom går det også an å trykke på C-p og C-n for å få tidligere yanks)
+- Etter man har gjort et flycheck-søk kan man trykke på "n" for å gå til neste forekomst av ordet. Dette fungerer i vanlig vim også :o :o :o. Mye av det som jeg bruker multiple cursors til kan faktisk fikses med dette. I hvert fall hvis man bruker "." for å gjøre noe igjen.
+- g f -> Find file or url. Kan være ganske nice å vite om
+- For kommentering: C-v putter deg inn i "visual block mode". Da kan man endre på mange tegn på en gang. Hvis man skal legge inn noe i denne modusen er man nødt til å bruke "I" og ikke "i".

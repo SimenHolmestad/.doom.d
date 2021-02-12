@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+config.*
+!config.org
+local_stuff.el
+custom.el
