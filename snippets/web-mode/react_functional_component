@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: react_functional_component
+# key: rfc
+# --
+import React from 'react';
+
+function `(file-name-base buffer-file-name)`(props) {
+  return (
+    <div>
+      $0
+    </div>
+  );
+}
+
+export default `(file-name-base buffer-file-name)`
