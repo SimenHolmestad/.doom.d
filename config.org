@@ -10,7 +10,7 @@
 Change cmd-key to meta and let alt function as normal for special keys.
 #+begin_src emacs-lisp
 (setq mac-option-modifier 'none)
-(setq mac-command-modifier (quote meta))
+(setq mac-command-modifier 'meta)
 #+end_src
 * Toggling of themes
 Taken directly from previous config. Makes it possible to toggle themes with "SPC t t".
@@ -37,35 +37,52 @@ Taken directly from previous config. Makes it possible to toggle themes with "SP
 (load-theme sh-theme-dark t)
 (define-key evil-normal-state-map (kbd "SPC t t") 'sh-toggle-theme)
 #+end_src
-* Toggle frame fullscreen
+* Font
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-M-Ø") 'toggle-frame-fullscreen)
+(setq doom-font (font-spec :family "FancyFiraCode A" :size 12)
+      doom-variable-pitch-font (font-spec :family "FancyFiraCode A" :size 12))
+#+end_src
+* Toggle frame fullscreen
+All my [[https://rectangleapp.com/][rectangle]] shortcuts are done by holding command, shift and ctrl at the same time so this keybinding goes well with that scheme.
+#+begin_src emacs-lisp
+(map! "C-M-Ø" 'toggle-frame-fullscreen)
 #+end_src
 * Extra navigation and editing commands
+Most of these are just personal preferences.
 #+begin_src emacs-lisp
-(map! :map evil-normal-state-map "g r" 'lsp-find-references)
-(map! :map evil-normal-state-map "g b" 'better-jumper-jump-backward)
-(map! :map evil-normal-state-map "s" 'isearch-forward)
-(map! :map evil-normal-state-map "S" 'isearch-backward)
-(map! :map evil-normal-state-map "SPC c SPC" 'recompile)
-(map! :map evil-normal-state-map "ø" 'evil-avy-goto-word-or-subword-1)
-(map! :map evil-normal-state-map "g ø" 'pop-global-mark)
-(map! :map evil-org-agenda-mode-map "ø" 'evil-avy-goto-word-or-subword-1)
-
-(map! :map evil-normal-state-map "j" 'evil-next-visual-line)
-(map! :map evil-normal-state-map "k" 'evil-previous-visual-line)
+(map! :n "g r" 'lsp-find-references
+      :n "g b" 'better-jumper-jump-backward
+      :n "s" 'isearch-forward
+      :n "S" 'isearch-backward
+      :n "ø" 'evil-avy-goto-word-or-subword-1
+      :n "g ø" 'pop-global-mark
+      :n "j" 'evil-next-visual-line
+      :n "k" 'evil-previous-visual-line)
+#+end_src
+For some reason, these does not work in org agenda.
+#+begin_src emacs-lisp
+(map! :map evil-org-agenda-mode-map
+      "ø" 'evil-avy-goto-word-or-subword-1
+      "g ø" 'pop-global-mark)
+#+end_src
+* Compiling
+#+begin_src emacs-lisp
+(map! :map doom-leader-code-map
+      "SPC" 'recompile
+      "K" 'kill-compilation)
 #+end_src
 * Dired-settings
+** Change some defaults
 #+begin_src emacs-lisp
 (map! :map dired-mode-map
       :n "<tab>" #'dired-display-file
       :n "h" #'dired-up-directory
       :n "l" #'dired-find-file)
 #+end_src
-** Less information in dired
-Er litt usikker på denne. Blir potensielt veldig stygt.
+** Less amount of details
+To get more details, just do "(" in a dired buffer.
 #+begin_src emacs-lisp
-;; (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
+(add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
 #+end_src
 * Yasnippet
 #+begin_src emacs-lisp
@@ -73,14 +90,22 @@ Er litt usikker på denne. Blir potensielt veldig stygt.
 #+end_src
 * Org-mode
 ** Org latex preview
-This thing is gold.
 #+begin_src emacs-lisp
 (map! :map org-mode-map :n "SPC m m" 'org-latex-preview)
 #+end_src
 ** Org agenda keys
 #+begin_src emacs-lisp
-(map! :map evil-org-agenda-mode-map "C-h" 'org-agenda-earlier)
-(map! :map evil-org-agenda-mode-map "C-l" 'org-agenda-later)
+(map! :map evil-org-agenda-mode-map
+      "C-h" 'org-agenda-earlier
+      "C-l" 'org-agenda-later)
+#+end_src
+** Same bullet for all headings
+#+begin_src emacs-lisp
+(setq org-superstar-headline-bullets-list '("◉" "◉" "◉" "◉" "◉" "◉"))
+#+end_src
+** No company for org buffers
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (company-mode 0)))
 #+end_src
 * Local settings
 #+begin_src emacs-lisp
@@ -90,35 +115,26 @@ This thing is gold.
 ** Better size of org-headings
 #+begin_src emacs-lisp
 (custom-set-faces!
- '(outline-1 :height 1.4)
- '(outline-2 :height 1.25)
- '(outline-3 :height 1.15))
+ '(outline-1 :font "Monaco" :height 1.4)
+ '(outline-2 :font "Monaco" :height 1.25)
+ '(outline-3 :font "Monaco" :height 1.15)
+ '(outline-4 :font "Monaco" :height 1.10)
+ '(outline-5 :font "Monaco" :height 1.10)
+ '(outline-6 :font "Monaco" :height 1.10))
 #+end_src
 ** Default text scale
 #+begin_src emacs-lisp
-(map! :map evil-normal-state-map "C-+" 'default-text-scale-increase)
-(map! :map evil-normal-state-map "C--" 'default-text-scale-decrease)
-(map! :map evil-normal-state-map "C-x C-0" 'default-text-scale-reset)
+(map! "C-+" 'default-text-scale-increase
+      "C--" 'default-text-scale-decrease
+      "C-x C-0" 'default-text-scale-reset)
 #+end_src
 * Defaults for ivy
 In my opinion, these are better defaults. (if you are not scared of the control key)
 #+begin_src emacs-lisp
-(map! :map ivy-minibuffer-map "C-h" #'ivy-backward-delete-char)
-(map! :map ivy-minibuffer-map "C-l" #'ivy-alt-done)
-(map! :map ivy-minibuffer-map "RET" #'ivy-alt-done)
-#+end_src
-* Python
-Denne fungerer visst ikke helt.
-#+begin_src emacs-lisp
-(after! python
-  (setq lsp-pyls-plugins-pycodestyle-max-line-length 400))
-#+end_src
-** Flycheck
-#+begin_src emacs-lisp
-(setq-hook! 'python-mode-hook flycheck-checker 'python-flake8)
-(use-package flycheck
-  :config
-  (setq-default flycheck-disabled-checkers '(python-pylint)))
+(map! :map ivy-minibuffer-map
+      "C-h" #'ivy-backward-delete-char
+      "C-l" #'ivy-alt-done
+      "RET" #'ivy-alt-done)
 #+end_src
 * Not save to killring when deleting single word
 This code is stolen from this post: https://www.reddit.com/r/emacs/comments/2ny06e/delete_text_not_kill_it_into_killring/.
@@ -137,14 +153,14 @@ This command does not push erased text to kill-ring."
   (interactive "p")
   (my-delete-word (- arg)))
 
-(global-set-key (kbd "<C-backspace>") 'my-backward-delete-word)
+(map! "<C-backspace>" 'my-backward-delete-word)
 #+end_src
 * Eshell
 #+begin_src emacs-lisp
 (map! :map evil-normal-state-map "SPC e" #'eshell)
 #+end_src
 * LSP-UI
-lsp-ui-sideline is not so good when working with two files side by side.
+I find that lsp-ui-sideline is not so good when working with two files side by side.
 #+begin_src emacs-lisp
 (setq lsp-ui-sideline-enable nil)
 #+end_src
@@ -152,13 +168,28 @@ lsp-ui-sideline is not so good when working with two files side by side.
 #+begin_src emacs-lisp
 (map! :map doom-leader-map "w o" #'delete-other-windows)
 #+end_src
-* Ting som er fint å vite
-- ESC kan brukes for å lukke compile-bufferen
-- Hvis det er problemer med python-error-meldinger så er det ".config/flake8" som må endres på.
-- Persp-mode er dritnice
-- Det går an å bruke "SPC o o" for å åpne i finder
-- Man kan bruke "SPC w u" for å "undoe" window-configs: Dette er dritschmud.
-- Hvis man trykker "p" i visual mode endrer man den teksten man har markert med den siste teksten som er kopiert. (i doom går det også an å trykke på C-p og C-n for å få tidligere yanks)
-- Etter man har gjort et flycheck-søk kan man trykke på "n" for å gå til neste forekomst av ordet. Dette fungerer i vanlig vim også :o :o :o. Mye av det som jeg bruker multiple cursors til kan faktisk fikses med dette. I hvert fall hvis man bruker "." for å gjøre noe igjen.
-- g f -> Find file or url. Kan være ganske nice å vite om
-- For kommentering: C-v putter deg inn i "visual block mode". Da kan man endre på mange tegn på en gang. Hvis man skal legge inn noe i denne modusen er man nødt til å bruke "I" og ikke "i".
+* Ispell
+Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer. For spellchecking while programming, ispell-comments-and-strings is nice.
+#+begin_src emacs-lisp
+(setq ispell-program-name "aspell")
+(ispell-change-dictionary "english" t) ;; Change to english dict globally
+
+(defun sh-toggle-dictionary ()
+  (interactive)
+  (cond ((string-equal ispell-dictionary "english")
+	 (ispell-change-dictionary "norsk" t)
+	 (message "Changed to dictionary: Norsk"))
+	((string-equal ispell-dictionary "norsk")
+	 (ispell-change-dictionary "english" t)
+	 (message "Changed to dictionary: English"))))
+
+(map! :leader
+      "d w" 'ispell-word
+      "d b" 'ispell-buffer
+      "d t" 'sh-toggle-dictionary
+      "d c" 'ispell-comments-and-strings)
+#+end_src
+* Avy in all windows
+#+begin_src emacs-lisp
+(setq avy-all-windows t)
+#+end_src
