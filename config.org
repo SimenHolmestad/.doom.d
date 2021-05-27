@@ -17,6 +17,18 @@ Change cmd-key to meta and let alt function as normal for special keys.
 (setq mac-option-modifier 'none)
 (setq mac-command-modifier 'meta)
 #+end_src
+* Evil-mode in minibuffer
+This is especially useful when changing long variable names in python using SPC c r.
+#+begin_src emacs-lisp
+(setq evil-want-minibuffer t)
+(map! :map minibuffer-local-map :n "RET" 'exit-minibuffer)
+#+end_src
+Some variable changes are needed to make this work with ivy.
+#+begin_src emacs-lisp
+(map! :map ivy-mode-map :i "C-j" 'ivy-next-line)
+(map! :map ivy-mode-map :i "C-k" 'ivy-previous-line)
+(map! :map ivy-mode-map :i "C-g" 'minibuffer-keyboard-quit)
+#+end_src
 * Toggling of themes
 Taken directly from previous config. Makes it possible to toggle themes with "SPC t t".
 #+begin_src emacs-lisp
