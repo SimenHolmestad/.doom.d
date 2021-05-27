@@ -198,10 +198,6 @@ This command does not push erased text to kill-ring."
 
 (map! "<C-backspace>" 'my-backward-delete-word)
 #+end_src
-* Eshell
-#+begin_src emacs-lisp
-(map! :map evil-normal-state-map "SPC e" #'eshell)
-#+end_src
 * LSP-UI
 I find that lsp-ui-sideline is not so good when working with two files side by side.
 #+begin_src emacs-lisp
