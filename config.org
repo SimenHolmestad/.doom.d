@@ -132,6 +132,24 @@ To get more details, just do "(" in a dired buffer.
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook (lambda () (company-mode 0)))
 #+end_src
+** Better navigation through headings
+#+begin_src emacs-lisp
+(map! :map org-mode-map :n "C-h" 'org-up-element)
+(map! :map org-mode-map :n "C-l" 'org-down-element)
+(map! :map org-mode-map :n "C-j" 'org-next-visible-heading)
+(map! :map org-mode-map :n "C-k" 'org-previous-visible-heading)
+#+end_src
+** Cycle through headings
+Just reverting to how the tab key works in "normal" emacs.
+#+begin_src emacs-lisp
+(after! evil-org
+  (remove-hook 'org-tab-first-hook #'+org-cycle-only-current-subtree-h))
+#+end_src
+** Do not dim blocked tasks
+Some tasks ended up looking weird in the agenda because of this as I am sometimes not scheduling subtasks.
+#+begin_src emacs-lisp
+(setq org-agenda-dim-blocked-tasks nil)
+#+end_src
 * Local settings
 #+begin_src emacs-lisp
 (load "~/.doom.d/local_stuff.el" t)
