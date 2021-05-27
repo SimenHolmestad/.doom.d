@@ -52,18 +52,16 @@ Most of these are just personal preferences.
 #+begin_src emacs-lisp
 (map! :n "g r" 'lsp-find-references
       :n "g b" 'better-jumper-jump-backward
-      :n "s" 'isearch-forward
-      :n "S" 'isearch-backward
       :n "ø" 'evil-avy-goto-word-or-subword-1
-      :n "g ø" 'pop-global-mark
+      :n "-" 'evil-ex-search-forward
       :n "j" 'evil-next-visual-line
+      :n "g +" 'evil-numbers/inc-at-pt
       :n "k" 'evil-previous-visual-line)
 #+end_src
 For some reason, these does not work in org agenda.
 #+begin_src emacs-lisp
 (map! :map evil-org-agenda-mode-map
-      "ø" 'evil-avy-goto-word-or-subword-1
-      "g ø" 'pop-global-mark)
+      "ø" 'evil-avy-goto-word-or-subword-1)
 #+end_src
 * Compiling
 #+begin_src emacs-lisp
