@@ -91,6 +91,11 @@ To get more details, just do "(" in a dired buffer.
 #+begin_src emacs-lisp
 (map! :map yas-minor-mode-map "C-ø" #'yas-expand)
 #+end_src
+
+#+begin_src emacs-lisp
+(define-key evil-normal-state-map (kbd "SPC y s") 'yas-describe-tables)
+(define-key evil-normal-state-map (kbd "SPC y n") 'yas-new-snippet)
+#+end_src
 * Org-mode
 ** Org latex preview
 #+begin_src emacs-lisp
