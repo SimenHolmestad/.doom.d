@@ -232,6 +232,16 @@ Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog
 #+begin_src emacs-lisp
 (setq avy-all-windows t)
 #+end_src
+* Python
+Delete trailing whitespace on save.
+#+begin_src emacs-lisp
+(add-hook 'python-mode-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
+#+end_src
 * Workspaces
 Hitting TAB for interacting with workspaces is not that great when there are more ergonomic keys around imo.
 #+begin_src emacs-lisp
