@@ -251,6 +251,11 @@ Delete trailing whitespace on save.
                  (save-excursion
                    (delete-trailing-whitespace))))))
 #+end_src
+* Faster keybinding for inserting previously deleted text
+#+begin_src emacs-lisp
+(map! :map doom-leader-insert-map
+      "i" '+default/yank-pop)
+#+end_src
 * Workspaces
 Hitting TAB for interacting with workspaces is not that great when there are more ergonomic keys around imo.
 #+begin_src emacs-lisp
