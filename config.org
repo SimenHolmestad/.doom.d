@@ -232,3 +232,20 @@ Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog
 #+begin_src emacs-lisp
 (setq avy-all-windows t)
 #+end_src
+* Workspaces
+Hitting TAB for interacting with workspaces is not that great when there are more ergonomic keys around imo.
+#+begin_src emacs-lisp
+(map! :map doom-leader-map
+      "TAB" nil
+      "e" doom-leader-workspace-map)
+#+end_src
+** Moving between workspaces
+It is nice to be able to go one workspave to the left or to the right. These keybindings are more close to the ones for changing between windows in a workspace.
+#+begin_src emacs-lisp
+(map! :map doom-leader-workspace-map
+      "h" '+workspace/switch-left
+      "l" '+workspace/switch-right
+      "f" '+workspace/switch-to
+      "e" '+workspace/display
+      "L" '+workspace/load)
+#+end_src
