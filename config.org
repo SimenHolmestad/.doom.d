@@ -251,6 +251,13 @@ Delete trailing whitespace on save.
                  (save-excursion
                    (delete-trailing-whitespace))))))
 #+end_src
+* Better navigation in compilation buffers
+#+begin_src emacs-lisp
+(add-hook 'compilation-mode-hook (lambda () (visual-line-mode 1)))
+
+(map! :map compilation-mode-map
+      "h" 'evil-backward-char)
+#+end_src
 * Faster keybinding for inserting previously deleted text
 #+begin_src emacs-lisp
 (map! :map doom-leader-insert-map
