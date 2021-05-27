@@ -6,6 +6,11 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (toggle-frame-fullscreen)
 #+end_src
+** Do not send command key to system
+It is best to not send command-key to system as weird stuff will happen.
+#+begin_src emacs-lisp
+(setq mac-pass-command-to-system nil)
+#+end_src
 * Change mac keyboard settings
 Change cmd-key to meta and let alt function as normal for special keys.
 #+begin_src emacs-lisp
