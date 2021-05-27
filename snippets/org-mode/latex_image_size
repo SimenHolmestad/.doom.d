@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: latex_image_size
+# key: size
+# --
+#+ATTR_LATEX: :width $0cm

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: bar
+# uuid:
+# key: bar
+# condition: t
+# --
+\bar{$1}$0
