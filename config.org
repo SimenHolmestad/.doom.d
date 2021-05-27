@@ -107,6 +107,11 @@ To get more details, just do "(" in a dired buffer.
       "C-h" 'org-agenda-earlier
       "C-l" 'org-agenda-later)
 #+end_src
+** Extra shortcut for org agenda
+#+begin_src emacs-lisp
+(map! :map doom-leader-open-map
+      "SPC" 'org-agenda)
+#+end_src
 ** Same bullet for all headings
 #+begin_src emacs-lisp
 (setq org-superstar-headline-bullets-list '("◉" "◉" "◉" "◉" "◉" "◉"))
