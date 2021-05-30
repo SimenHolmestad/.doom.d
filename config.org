@@ -251,6 +251,12 @@ Delete trailing whitespace on save.
                  (save-excursion
                    (delete-trailing-whitespace))))))
 #+end_src
+** Disable pydocstyle
+[[https://github.com/PyCQA/pydocstyle][Pydocstyle]] is probably nice when there are strict policies on docstrings.
+#+begin_src emacs-lisp
+(after! lsp-mode
+  (setq lsp-pylsp-plugins-pydocstyle-enabled nil))
+#+end_src
 * Better navigation in compilation buffers
 #+begin_src emacs-lisp
 (add-hook 'compilation-mode-hook (lambda () (visual-line-mode 1)))
