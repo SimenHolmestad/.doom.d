@@ -20,7 +20,7 @@
 #+OPTIONS: toc:nil num:nil
 #+OPTIONS: \n:t
 #+LATEX: \setlength\parindent{0pt}
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 :END:
 
 $0

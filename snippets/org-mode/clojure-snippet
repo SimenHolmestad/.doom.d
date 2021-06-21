@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: clojure-snippet
+# key: cl
+# condition: t
+# --
+#+begin_src clojure
+$0
+#+end_src
