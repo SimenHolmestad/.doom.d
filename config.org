@@ -159,6 +159,10 @@ Some tasks ended up looking weird in the agenda because of this as I am sometime
 #+begin_src emacs-lisp
 (setq org-agenda-dim-blocked-tasks nil)
 #+end_src
+** Clojure code blocks
+#+begin_src emacs-lisp
+(setq org-babel-clojure-backend 'cider)
+#+end_src
 * Local settings
 #+begin_src emacs-lisp
 (load "~/.doom.d/local_stuff.el" t)
