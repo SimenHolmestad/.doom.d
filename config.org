@@ -105,7 +105,7 @@ To get more details, just do "(" in a dired buffer.
 #+end_src
 
 #+begin_src emacs-lisp
-(define-key evil-normal-state-map (kbd "SPC y s") 'yas-describe-tables)
+(define-key evil-normal-state-map (kbd "SPC y l") 'yas-describe-tables)
 (define-key evil-normal-state-map (kbd "SPC y n") 'yas-new-snippet)
 #+end_src
 * Org-mode
