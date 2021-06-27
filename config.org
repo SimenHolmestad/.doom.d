@@ -70,6 +70,8 @@ Most of these are just personal preferences.
 (map! :n "g r" 'lsp-find-references
       :n "g b" 'better-jumper-jump-backward
       :n "ø" 'evil-avy-goto-word-or-subword-1
+      :n "æ j" 'evilem-motion-next-line
+      :n "æ k" 'evilem-motion-previous-line
       :n "-" 'evil-ex-search-forward
       :n "j" 'evil-next-visual-line
       :n "g +" 'evil-numbers/inc-at-pt
@@ -162,6 +164,12 @@ Some tasks ended up looking weird in the agenda because of this as I am sometime
 ** Clojure code blocks
 #+begin_src emacs-lisp
 (setq org-babel-clojure-backend 'cider)
+#+end_src
+* Clojure
+Do not start cider repl in popup mode
+#+begin_src emacs-lisp
+(after! cider
+  (set-popup-rule! "^\\*cider-repl" :ignore t))
 #+end_src
 * Local settings
 #+begin_src emacs-lisp
