@@ -32,9 +32,10 @@ Some variable changes are needed to make this work with ivy.
 * Toggling of themes
 Taken directly from previous config. Makes it possible to toggle themes with "SPC t t".
 #+begin_src emacs-lisp
-(defvar sh-theme-dark 'doom-city-lights)
-(defvar sh-theme-light 'doom-solarized-light)
-(defvar sh-current-theme sh-theme-dark)
+(defvar sh-theme-1 'doom-city-lights)
+(defvar sh-theme-2 'doom-solarized-light)
+(defvar sh-theme-3 'doom-material)
+(defvar sh-current-theme sh-theme-1)
 
 ;; Disable other themes before loading new one
 (defadvice load-theme (before theme-dont-propagate activate)
@@ -47,11 +48,12 @@ Taken directly from previous config. Makes it possible to toggle themes with "SP
 
 (defun sh-toggle-theme ()
   (interactive)
-  (cond ((eq sh-current-theme sh-theme-dark) (sh-set-next-theme sh-theme-light))
-        ((eq sh-current-theme sh-theme-light) (sh-set-next-theme sh-theme-dark)))
+  (cond ((eq sh-current-theme sh-theme-1) (sh-set-next-theme sh-theme-2))
+        ((eq sh-current-theme sh-theme-2) (sh-set-next-theme sh-theme-3))
+        ((eq sh-current-theme sh-theme-3) (sh-set-next-theme sh-theme-1)))
   (run-hooks 'sh-post-theme-change-hook)) ;; Some stuff needs to reset after theme change
 
-(load-theme sh-theme-dark t)
+(load-theme sh-theme-1 t)
 (define-key evil-normal-state-map (kbd "SPC t t") 'sh-toggle-theme)
 #+end_src
 * Font
