@@ -271,6 +271,12 @@ Delete trailing whitespace on save.
 (after! lsp-mode
   (setq lsp-pylsp-plugins-pydocstyle-enabled nil))
 #+end_src
+* Javascript
+Use rjsx-mode with better highlighting in react files:
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . rjsx-mode))
+#+end_src
 * Better navigation in compilation buffers
 #+begin_src emacs-lisp
 (add-hook 'compilation-mode-hook (lambda () (visual-line-mode 1)))
