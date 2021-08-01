@@ -190,9 +190,9 @@ Do not start cider repl in popup mode
 #+end_src
 ** Default text scale
 #+begin_src emacs-lisp
-(map! :n "C-+" 'default-text-scale-increase
-      :n "C--" 'default-text-scale-decrease
-      :n "C-x C-0" 'default-text-scale-reset)
+(map! :ni "C-+" 'default-text-scale-increase
+      :ni "C--" 'default-text-scale-decrease
+      :ni "C-x C-0" 'default-text-scale-reset)
 #+end_src
 * Defaults for ivy
 In my opinion, these are better defaults. (if you are not scared of the control key)
