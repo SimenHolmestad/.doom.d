@@ -15,6 +15,7 @@ It is best to not send command-key to system as weird stuff will happen.
 Change cmd-key to meta and let alt function as normal for special keys.
 #+begin_src emacs-lisp
 (setq mac-option-modifier 'none)
+(setq mac-right-option-modifier 'meta)
 (setq mac-command-modifier 'meta)
 #+end_src
 * Evil-mode in minibuffer
