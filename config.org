@@ -122,6 +122,13 @@ To get more details, just do "(" in a dired buffer.
 (define-key evil-normal-state-map (kbd "SPC y l") 'yas-describe-tables)
 (define-key evil-normal-state-map (kbd "SPC y n") 'yas-new-snippet)
 #+end_src
+
+Add snippet directory for local snippets:
+
+#+begin_src emacs-lisp
+(setq yas-snippet-dirs (append yas-snippet-dirs
+                               '("~/Dropbox/org/local_snippets")))
+#+end_src
 * Org-mode
 ** Start org-mode collapsed
 #+begin_src emacs-lisp
