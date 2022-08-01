@@ -181,6 +181,11 @@ Some tasks ended up looking weird in the agenda because of this as I am sometime
 #+begin_src emacs-lisp
 (setq org-babel-clojure-backend 'cider)
 #+end_src
+** Add timestamp when closing todo
+#+begin_src emacs-lisp
+(after! org
+  (setq org-log-done 'time))
+#+end_src
 * Clojure
 Do not start cider repl in popup mode
 #+begin_src emacs-lisp
