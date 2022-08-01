@@ -124,7 +124,8 @@ To get more details, just do "(" in a dired buffer.
 * Org-mode
 ** Start org-mode collapsed
 #+begin_src emacs-lisp
-(setq org-startup-folded t)
+(after! org
+  (setq org-startup-folded t))
 #+end_src
 ** Do not display line numbers or git info in org buffers
 #+begin_src emacs-lisp
