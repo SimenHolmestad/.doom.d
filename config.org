@@ -62,6 +62,10 @@ Taken directly from previous config. Makes it possible to toggle themes with "SP
 (setq doom-font (font-spec :family "Fira Code" :size 12)
       doom-variable-pitch-font (font-spec :family "Fira Code" :size 12))
 #+end_src
+* Relative line numbers
+#+begin_src emacs-lisp
+(setq display-line-numbers-type 'relative)
+#+end_src
 * Toggle frame fullscreen
 All my [[https://rectangleapp.com/][rectangle]] shortcuts are done by holding command, shift and ctrl at the same time so this keybinding goes well with that scheme.
 #+begin_src emacs-lisp
