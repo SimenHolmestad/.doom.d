@@ -88,6 +88,11 @@ For some reason, these does not work in org agenda.
 (map! :map evil-org-agenda-mode-map
       "ø" 'evil-avy-goto-word-or-subword-1)
 #+end_src
+* Bookmarks
+Storing the bookmarks here means it would be synced with dropbox. This allows for the bookmarks to be backed up, as well as being available on multiple machines. Bookmarks being available on different machines is nice as a lot of bookmarks are pointing to dropbox files and remote files.
+#+begin_src emacs-lisp
+(setq bookmark-default-file "~/org/.bookmarks")
+#+end_src
 * Compiling
 #+begin_src emacs-lisp
 (map! :map doom-leader-code-map
@@ -179,7 +184,7 @@ Do not start cider repl in popup mode
 #+end_src
 * Local settings
 #+begin_src emacs-lisp
-(load "~/.doom.d/local_stuff.el" t)
+(load "~/Dropbox/org/.org-elisp-code.el" t)
 #+end_src
 * Text scale
 ** Better size of org-headings
