@@ -155,9 +155,9 @@ To get more details, just do "(" in a dired buffer.
 #+begin_src emacs-lisp
 (setq org-superstar-headline-bullets-list '("◉" "◉" "◉" "◉" "◉" "◉"))
 #+end_src
-** No company for org buffers
+** Turn off company in org-mode
 #+begin_src emacs-lisp
-(add-hook 'org-mode-hook (lambda () (company-mode 0)))
+(add-hook! org-mode (company-mode -1))
 #+end_src
 ** Better navigation through headings
 #+begin_src emacs-lisp
