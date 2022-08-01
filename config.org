@@ -4,7 +4,8 @@
 #+begin_src emacs-lisp
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(toggle-frame-fullscreen)
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . fullboth)))))
 #+end_src
 ** Do not send command key to system
 It is best to not send command-key to system as weird stuff will happen.
