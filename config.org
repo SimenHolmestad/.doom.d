@@ -75,7 +75,6 @@ All my [[https://rectangleapp.com/][rectangle]] shortcuts are done by holding co
 Most of these are just personal preferences.
 #+begin_src emacs-lisp
 (map! :n "g r" 'lsp-find-references
-      :n "g b" 'better-jumper-jump-backward
       :n "ø" 'evil-avy-goto-word-or-subword-1
       :n "æ j" 'evilem-motion-next-line
       :n "æ k" 'evilem-motion-previous-line
