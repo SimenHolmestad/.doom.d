@@ -136,6 +136,10 @@ To get more details, just do "(" in a dired buffer.
 #+begin_src emacs-lisp
 (map! :map org-mode-map :n "SPC m m" 'org-latex-preview)
 #+end_src
+** Org-babel-tangle
+#+begin_src emacs-lisp
+(map! :map org-mode-map :n "SPC m ø" 'org-babel-tangle)
+#+end_src
 ** Org agenda keys
 #+begin_src emacs-lisp
 (map! :map evil-org-agenda-mode-map
