@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: bib
+# uuid: bib
+# key: bib
+# condition: t
+# --
+#+begin_src :tangle yes
+$0
+#+end_src
