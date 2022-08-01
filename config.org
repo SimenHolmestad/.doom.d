@@ -238,6 +238,7 @@ This command does not push erased text to kill-ring."
   (interactive "p")
   (my-delete-word (- arg)))
 
+(map! "<M-backspace>" 'my-backward-delete-word)
 (map! "<C-backspace>" 'my-backward-delete-word)
 #+end_src
 * LSP-UI
